@@ -5,41 +5,41 @@ import chair from "../../assets/chair.png";
 import add from "../../assets/add.png";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 export default function TableView() {
   const [addTableModal, setAddTableModal] = useState(false);
-  const [tables, setTables] = useState([
-    { name: "1", number: 1, chairs: 2 },
-    { name: "2", number: 2, chairs: 3 },
-    { name: "3", number: 3, chairs: 5 },
-    { name: "4", number: 4, chairs: 7 },
-    { name: "5", number: 5, chairs: 1 },
-    { name: "6", number: 6, chairs: 4 },
-    { name: "7", number: 7, chairs: 2 },
-    { name: "8", number: 8, chairs: 3 },
-    { name: "9", number: 9, chairs: 4 },
-    { name: "10", number: 10, chairs: 5 },
-    { name: "11", number: 11, chairs: 2 },
-    { name: "12", number: 12, chairs: 3 },
-    { name: "13", number: 13, chairs: 5 },
-    { name: "14", number: 14, chairs: 7 },
-    { name: "15", number: 15, chairs: 1 },
-    { name: "16", number: 16, chairs: 4 },
-    { name: "17", number: 17, chairs: 2 },
-    { name: "18", number: 18, chairs: 3 },
-    { name: "19", number: 19, chairs: 4 },
-    { name: "20", number: 20, chairs: 5 },
-    { name: "21", number: 21, chairs: 2 },
-    { name: "22", number: 22, chairs: 3 },
-    { name: "23", number: 23, chairs: 5 },
-    { name: "24", number: 24, chairs: 7 },
-    { name: "25", number: 25, chairs: 1 },
-    { name: "26", number: 26, chairs: 4 },
-    { name: "27", number: 27, chairs: 2 },
-    { name: "28", number: 28, chairs: 3 },
-    { name: "29", number: 29, chairs: 4 },
-    { name: "30", number: 30, chairs: 5 },
-  ]);
+  const [tables, setTables] = useState([]);
+  const [tableToDelete, setTableToDelete] = useState(null);
+
+  const fetchTables = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/tables/all`);
+      setTables(response.data.tables);
+    } catch (error) {
+      console.error("Error fetching tables:", error);
+    }
+  };
+
+  const handleTableDelete = async () => {
+    if (tableToDelete) {
+      try {
+        const id = tableToDelete;
+        console.log(id);
+        await axios.delete(`http://localhost:3000/api/tables/delete/${id}`);
+        toast.success("Table deleted successfully");
+        setTableToDelete(null);
+        fetchTables();
+      } catch (error) {
+        console.error("Error deleting table:", error);
+        toast.error("Error deleting table");
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchTables();
+  }, []);
   const modalRef = useRef(null);
   const [newTable, setNewTable] = useState({ name: "", number: 0, chairs: 1 });
 
@@ -70,7 +70,7 @@ export default function TableView() {
     };
   }, [addTableModal]);
 
-  const handleCreateTable = () => {
+  const handleCreateTable = async () => {
     if (newTable.name === "") {
       toast.error("Table name cannot be empty");
       return;
@@ -81,8 +81,16 @@ export default function TableView() {
       toast.error("Table name already exists");
       return;
     }
-    setTables((prev) => [...prev, newTable]);
+
+    console.log(newTable);
+    await axios.post(`http://localhost:3000/api/tables/create`, {
+      name: newTable.name,
+      number: newTable.number,
+      chairs: newTable.chairs,
+    });
+    toast.success("Table created successfully");
     setAddTableModal(false);
+    fetchTables();
   };
 
   const getNextTableNumber = () => {
@@ -109,12 +117,20 @@ export default function TableView() {
         <div className="right-area-main-content-table-tableview">
           <h2>Tables</h2>
           <div className="tables-view">
-            {tables.map((table) => (
+            {tables?.map((table) => (
               <div className="indi-table" key={table.number}>
-                <img src={deleteTable} alt="" className="delete-img" />
+                <img
+                  src={deleteTable}
+                  alt=""
+                  className="delete-img"
+                  onClick={() => {
+                    setTableToDelete(table._id);
+                    handleTableDelete();
+                  }}
+                />
                 <div className="table-name">
                   <h3>Table</h3>
-                  <h4>{table.name < 10 ? `0${table.name}` : table.name}</h4>
+                  <h4>{table.name}</h4>
                 </div>
                 <div className="chair-info">
                   <img src={chair} alt="" className="chair-img" />

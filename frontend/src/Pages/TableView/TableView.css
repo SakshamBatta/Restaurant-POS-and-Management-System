@@ -55,6 +55,7 @@
   border: none;
   font-family: "Inter", sans-serif;
   font-size: 16.1px;
+  outline: none;
 }
 
 .main-content-table-tableview {
@@ -151,6 +152,7 @@
   border: 2px dashed #999999;
   border-radius: 7.05px;
   width: 147.96px;
+  height: 126.82px;
   background-color: #ffffff;
   cursor: pointer;
 }
@@ -186,6 +188,7 @@
   border-bottom: 2px dashed #000000;
   text-align: center;
   margin-top: 15px;
+  outline: none;
 }
 
 .add-table-modal h3 {
@@ -205,6 +208,7 @@
   border-radius: 8px;
   border: none;
   margin-top: 10px;
+  outline: none;
 }
 
 .chair-dropdown option {
