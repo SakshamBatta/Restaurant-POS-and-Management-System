@@ -1,4 +1,4 @@
-const TableSchema = require("../models/TableSchema");
+const TableSchema = require("../models/tableSchema");
 
 exports.createTable = async (req, res) => {
   try {
@@ -56,4 +56,3 @@ exports.deleteTable = async (req, res) => {
     });
   }
 };
-

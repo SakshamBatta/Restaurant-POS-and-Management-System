@@ -4,194 +4,70 @@ import orderHeader from "../../assets/orderHeader.png";
 import time from "../../assets/time.png";
 import doneBlack from "../../assets/done-black.png";
 import doneGreen from "../../assets/done-green.png";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import moment from "moment-timezone";
+import { toast } from "react-toastify";
 
 export default function Status() {
-  const menuDetails = [
-    {
-      orderNumber: 1,
-      tableName: "Table 01",
-      orderTime: "9:37 AM",
-      noOfItems: "3 Item",
-      orderType: "Dine In",
-      orderStatus: "Ongoing",
-      timeLeft: "4 Min",
-      items: [
-        {
-          name: "Double Cheeseburger",
-          quantity: 1,
-        },
-        {
-          name: "Apple Pie",
-          quantity: 1,
-        },
-        {
-          name: "Coca-Cola L",
-          quantity: 1,
-        },
-      ],
-    },
-    {
-      orderNumber: 1,
-      tableName: "Table 01",
-      orderTime: "9:37 AM",
-      noOfItems: "3 Item",
-      orderType: "Done",
-      orderStatus: "Served",
-      timeLeft: "4 Min",
-      items: [
-        {
-          name: "Double Cheeseburger",
-          quantity: 1,
-        },
-        {
-          name: "Apple Pie",
-          quantity: 1,
-        },
-        {
-          name: "Coca-Cola L",
-          quantity: 1,
-        },
-      ],
-    },
-    {
-      orderNumber: 1,
-      tableName: "Table 01",
-      orderTime: "9:37 AM",
-      noOfItems: "3 Item",
-      orderType: "Take Away",
-      orderStatus: "Not Picked up",
-      timeLeft: "4 Min",
-      items: [
-        {
-          name: "Double Cheeseburger",
-          quantity: 1,
-        },
-        {
-          name: "Apple Pie",
-          quantity: 1,
-        },
-        {
-          name: "Coca-Cola L",
-          quantity: 1,
-        },
-      ],
-    },
-    {
-      orderNumber: 1,
-      tableName: "Table 01",
-      orderTime: "9:37 AM",
-      noOfItems: "3 Item",
-      orderType: "Dine In",
-      orderStatus: "Ongoing",
-      timeLeft: "4 Min",
-      items: [
-        {
-          name: "Double Cheeseburger",
-          quantity: 1,
-        },
-        {
-          name: "Apple Pie",
-          quantity: 1,
-        },
-        {
-          name: "Coca-Cola L",
-          quantity: 1,
-        },
-      ],
-    },
-    {
-      orderNumber: 1,
-      tableName: "Table 01",
-      orderTime: "9:37 AM",
-      noOfItems: "3 Item",
-      orderType: "Dine In",
-      orderStatus: "Ongoing",
-      timeLeft: "4 Min",
-      items: [
-        {
-          name: "Double Cheeseburger",
-          quantity: 1,
-        },
-        {
-          name: "Apple Pie",
-          quantity: 1,
-        },
-        {
-          name: "Coca-Cola L",
-          quantity: 1,
-        },
-      ],
-    },
-    {
-      orderNumber: 1,
-      tableName: "Table 01",
-      orderTime: "9:37 AM",
-      noOfItems: "3 Item",
-      orderType: "Take Away",
-      orderStatus: "Not Picked up",
-      timeLeft: "4 Min",
-      items: [
-        {
-          name: "Double Cheeseburger",
-          quantity: 1,
-        },
-        {
-          name: "Apple Pie",
-          quantity: 1,
-        },
-        {
-          name: "Coca-Cola L",
-          quantity: 1,
-        },
-      ],
-    },
-    {
-      orderNumber: 1,
-      tableName: "Table 01",
-      orderTime: "9:37 AM",
-      noOfItems: "3 Item",
-      orderType: "Done",
-      orderStatus: "Served",
-      timeLeft: "4 Min",
-      items: [
-        {
-          name: "Double Cheeseburger",
-          quantity: 1,
-        },
-        {
-          name: "Apple Pie",
-          quantity: 1,
-        },
-        {
-          name: "Coca-Cola L",
-          quantity: 1,
-        },
-      ],
-    },
-    {
-      orderNumber: 1,
-      tableName: "Table 01",
-      orderTime: "9:37 AM",
-      noOfItems: "3 Item",
-      orderType: "Dine In",
-      orderStatus: "Ongoing",
-      timeLeft: "4 Min",
-      items: [
-        {
-          name: "Double Cheeseburger",
-          quantity: 1,
-        },
-        {
-          name: "Apple Pie",
-          quantity: 1,
-        },
-        {
-          name: "Coca-Cola L",
-          quantity: 1,
-        },
-      ],
-    },
-  ];
+  const [orderStatusDetails, setOrderStatusDetails] = useState([]);
+
+  const fetchOrderDetails = async () => {
+    const response = await axios.get(`http://localhost:3000/api/orders/all`);
+    setOrderStatusDetails(response.data.orders);
+  };
+
+  useEffect(() => {
+    fetchOrderDetails();
+  }, []);
+
+  const timeToIST = (time) => {
+    const istTime = moment(time).tz("Asia/Kolkata").format("hh:mm A");
+    return istTime;
+  };
+
+  const getTimeLeft = (orderTime, deliveryTime) => {
+    const deliveryMinutes = parseInt(deliveryTime.split(" ")[0], 10) || 0;
+
+    const deliveryEndTime = moment(orderTime)
+      .tz("Asia/Kolkata")
+      .add(deliveryMinutes, "minutes");
+    const now = moment().tz("Asia/Kolkata");
+
+    const duration = moment.duration(deliveryEndTime.diff(now));
+
+    if (duration.asMilliseconds() <= 0) return "0 min";
+
+    const minutes = Math.floor(duration.asMinutes());
+
+    return `${minutes} min`;
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      orderStatusDetails.forEach((order) => {
+        const minutesLeft = getTimeLeft(order.orderTime, order.deliveryTime);
+
+        if (
+          parseInt(minutesLeft.split(" ")[0], 10) <= 0 &&
+          order.orderType !== "Done" &&
+          order.orderStatus !== "Served"
+        ) {
+          console.log(order._id);
+          axios
+            .post(`http://localhost:3000/api/orders/update/${order._id}`)
+            .then(() => fetchOrderDetails())
+            .then(() => toast.success("Order served successfully!"))
+            .catch((err) =>
+              console.error(`Failed to update order ${order._id}`, err)
+            );
+        }
+      });
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, [orderStatusDetails]);
+
   return (
     <div className="container-status">
       <div className="top-navbar-status">
@@ -210,7 +86,7 @@ export default function Status() {
         <div className="right-area-main-content-status">
           <h2>Order Line</h2>
           <div className="order-status">
-            {menuDetails.map((order) => (
+            {orderStatusDetails.map((order) => (
               <div
                 className="order-card"
                 style={{
@@ -233,9 +109,11 @@ export default function Status() {
                       <div className="table-details-name">
                         {order.orderType !== "Take Away" && order.tableName}
                       </div>
-                      <div className="order-time">{order.orderTime}</div>
+                      <div className="order-time">
+                        {timeToIST(order.orderTime)}
+                      </div>
                     </div>
-                    <div className="item-numbers">{order.noOfItems}</div>
+                    <div className="item-numbers">{order.noOfItems} Item</div>
                   </div>
                   <div className="right-header-div">
                     <div
@@ -270,7 +148,7 @@ export default function Status() {
                         </div>
                         {order.orderStatus === "Ongoing" && (
                           <div className="time-left-status-div">
-                            : {order.timeLeft}
+                            : {getTimeLeft(order.orderTime, order.deliveryTime)}
                           </div>
                         )}
                       </div>

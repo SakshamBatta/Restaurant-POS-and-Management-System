@@ -124,6 +124,8 @@
 .order-number {
   font-family: "Inter", sans-serif;
   font-size: 15px;
+  margin-left: -1px;
+  width: 24px;
 }
 
 .table-details-name {
