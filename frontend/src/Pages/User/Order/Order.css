@@ -131,12 +131,10 @@ body {
 .add-quan-plus {
   width: 174px;
   height: 84px;
-  /* border: 1px solid grey; */
 }
 .item-image {
   width: 174px;
   height: 84px;
-  /* border: 1px solid grey; */
 }
 
 .quantity-div {
@@ -307,7 +305,6 @@ body {
   .item-image {
     width: 164px;
     height: 74px;
-    /* border: 1px solid grey; */
   }
 
   .name-price {
@@ -476,7 +473,6 @@ body {
   .item-image {
     width: 144px;
     height: 74px;
-    /* border: 1px solid grey; */
   }
 
   .name-price {
@@ -502,13 +498,11 @@ body {
     font-weight: 500;
     font-size: 11px;
     color: #272727;
-    /* margin-top: -4px; */
   }
 
   .add-quan-plus {
     width: 174px;
     height: 84px;
-    /* border: 1px solid grey; */
   }
   .all-items {
     display: grid;

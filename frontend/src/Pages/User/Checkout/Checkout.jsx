@@ -37,6 +37,10 @@ export default function Checkout() {
   console.log("selectedOrder", selectedOrder);
 
   const handleDragEnd = async (_, info) => {
+    if (name === "" || number === "") {
+      alert("Please fill in your name and phone number.");
+      return;
+    }
     if (info.point.x > 120) {
       await axios.post(
         `https://restaurant-pos-and-management-system.onrender.com/api/orders/create`,
