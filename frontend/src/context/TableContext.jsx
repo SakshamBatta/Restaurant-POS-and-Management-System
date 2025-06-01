@@ -8,7 +8,9 @@ export function TableProvider({ children }) {
 
   const fetchTables = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/tables/all`);
+      const response = await axios.get(
+        `https://restaurant-pos-and-management-system.onrender.com/api/tables/all`
+      );
       setTables(response.data.tables);
     } catch (error) {
       console.error("Error fetching tables:", error);

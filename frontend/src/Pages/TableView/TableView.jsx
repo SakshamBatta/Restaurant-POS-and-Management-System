@@ -18,7 +18,7 @@ export default function TableView() {
     if (id) {
       try {
         console.log(id);
-        await axios.delete(`http://localhost:3000/api/tables/delete/${id}`);
+        await axios.delete(`https://restaurant-pos-and-management-system.onrender.com/api/tables/delete/${id}`);
         toast.success("Table deleted successfully");
         fetchTables();
       } catch (error) {
@@ -71,7 +71,7 @@ export default function TableView() {
     }
 
     console.log(newTable);
-    await axios.post(`http://localhost:3000/api/tables/create`, {
+    await axios.post(`https://restaurant-pos-and-management-system.onrender.com/api/tables/create`, {
       name: newTable.name,
       number: newTable.number,
       chairs: newTable.chairs,

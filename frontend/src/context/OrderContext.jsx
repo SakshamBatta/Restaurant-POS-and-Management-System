@@ -8,7 +8,9 @@ export function OrderProvider({ children }) {
   const [orderStatusDetails, setOrderStatusDetails] = useState([]);
 
   const fetchOrderDetails = async () => {
-    const response = await axios.get(`http://localhost:3000/api/orders/all`);
+    const response = await axios.get(
+      `https://restaurant-pos-and-management-system.onrender.com/api/orders/all`
+    );
     setOrderStatusDetails(response.data.orders);
   };
 

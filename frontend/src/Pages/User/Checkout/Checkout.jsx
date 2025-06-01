@@ -38,22 +38,25 @@ export default function Checkout() {
 
   const handleDragEnd = async (_, info) => {
     if (info.point.x > 120) {
-      await axios.post(`http://localhost:3000/api/orders/create`, {
-        items: selectedOrder.map((item) => ({
-          name: item.name,
-          quantity: item.quantity,
-        })),
-        orderType,
-        grandTotal,
-        user: {
-          name,
-          number,
-          address: orderType === "Take Away" ? inputValue || "" : "",
-          people: orderType === "Dine In" ? parseInt(inputValue) || 1 : 1,
-        },
-        instructions: instructions || "",
-        deliveryTime,
-      }),
+      await axios.post(
+        `https://restaurant-pos-and-management-system.onrender.com/api/orders/create`,
+        {
+          items: selectedOrder.map((item) => ({
+            name: item.name,
+            quantity: item.quantity,
+          })),
+          orderType,
+          grandTotal,
+          user: {
+            name,
+            number,
+            address: orderType === "Take Away" ? inputValue || "" : "",
+            people: orderType === "Dine In" ? parseInt(inputValue) || 1 : 1,
+          },
+          instructions: instructions || "",
+          deliveryTime,
+        }
+      ),
         setOrdered(true);
       setSelectedOrder([]);
       setInputValue("");

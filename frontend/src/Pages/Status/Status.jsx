@@ -40,7 +40,7 @@ export default function Status() {
     const orderStatus = e.target.value;
     setDropdownStatus(e.target.value);
     await axios.post(
-      `http://localhost:3000/api/orders/updateTakeAway/${orderId}`,
+      `https://restaurant-pos-and-management-system.onrender.com/api/orders/updateTakeAway/${orderId}`,
       {
         orderStatus: orderStatus,
       }
@@ -62,7 +62,7 @@ export default function Status() {
           order.orderType === "Dine In"
         ) {
           axios
-            .post(`http://localhost:3000/api/orders/update/${order._id}`)
+            .post(`https://restaurant-pos-and-management-system.onrender.com/api/orders/update/${order._id}`)
             .then(() => fetchOrderDetails())
             .then(() => toast.success("Order served successfully!"))
             .catch((err) =>

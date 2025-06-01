@@ -46,7 +46,7 @@ export default function Analytics() {
     const fetchSummaryData = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3000/api/analytics/summary?filter=${filter}`
+          `https://restaurant-pos-and-management-system.onrender.com/api/analytics/summary?filter=${filter}`
         );
         setSummary(res.data.summary);
         setPercentages(res.data.percentages);
@@ -67,20 +67,22 @@ export default function Analytics() {
   const COLORS = ["#333", "#999", "#ccc"];
 
   const getChefs = async () => {
-    const response = await axios.get(`http://localhost:3000/api/chefs/get`);
+    const response = await axios.get(
+      `https://restaurant-pos-and-management-system.onrender.com/api/chefs/get`
+    );
     setChefs(response.data.chefs);
   };
 
   const getUserCount = async () => {
     const response = await axios.get(
-      `http://localhost:3000/api/analytics/get-users`
+      `https://restaurant-pos-and-management-system.onrender.com/api/analytics/get-users`
     );
     setUserCount(response.data.result[0].uniqueNumberCount);
   };
 
   const getTotalRevenue = async () => {
     const response = await axios.get(
-      `http://localhost:3000/api/analytics/total-revenue`
+      `https://restaurant-pos-and-management-system.onrender.com/api/analytics/total-revenue`
     );
     setTotalRevenue(response.data.totalRevenue);
   };
@@ -123,7 +125,7 @@ export default function Analytics() {
   const fetchData = async (range) => {
     try {
       const res = await axios.get(
-        `http://localhost:3000/api/analytics/revenue?range=${range}`
+        `https://restaurant-pos-and-management-system.onrender.com/api/analytics/revenue?range=${range}`
       );
       const rawData = res.data;
       const expectedKeys = getFullRange(range);
