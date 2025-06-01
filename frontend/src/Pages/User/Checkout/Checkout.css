@@ -12,7 +12,6 @@
   display: flex;
   margin-top: 28px;
   padding: 10px 17px;
-  /* margin-bottom: -8px; */
 }
 
 .indi-order-img {
@@ -424,4 +423,444 @@
 .next-modal {
   background-color: #505050;
   color: #fefefe;
+}
+
+@media (max-width: 396px) {
+  .order-container-checkout {
+    padding: 1px 5px;
+    width: 100%;
+    min-height: 80dvh;
+    overflow-y: auto;
+  }
+  .order-container-checkout .greet-message h3 {
+    font-size: 15px;
+  }
+  .order-container-checkout .greet-message p {
+    font-size: 10px;
+  }
+  .order-container-checkout {
+    padding: 0px;
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .indi-selected-order {
+    display: flex;
+    margin-top: 10px;
+    padding: 7px 17px;
+  }
+
+  .indi-order-img {
+    width: 152px;
+    height: 96px;
+    border-radius: 4px;
+    box-shadow: 0 0 2px 7px #c9c5c5;
+  }
+
+  .indi-selected-order-details {
+    padding: 0 28px;
+  }
+
+  .indi-selected-order-details p {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+  }
+
+  .name-cross {
+    display: flex;
+  }
+
+  .back-img {
+    width: 27px;
+    height: 27px;
+    margin-left: 8px;
+    margin-top: -6px;
+  }
+
+  .indi-selected-order-details h3 {
+    font-family: "Roboto", sans-serif;
+    font-family: 500;
+    font-size: 12px;
+    margin-top: 17px;
+    color: #272727;
+  }
+
+  .price-add-dec-quan {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .add-dec-quan {
+    display: flex;
+    gap: 15px;
+    margin-top: 13px;
+    align-items: center;
+    justify-content: center;
+    margin-left: 16px;
+  }
+
+  .add-dec-quan button {
+    width: 22px;
+    height: 22px;
+    border-radius: 5px;
+    border: 1px solid grey;
+    font-size: 19px;
+  }
+
+  .add-dec-quan span {
+    font-family: "Inter", sans-serif;
+    font-size: 17px;
+    color: #101010;
+  }
+
+  .cooking-inst {
+    width: 200px;
+    height: 19px;
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    border: none;
+    border-bottom: 1px dashed grey;
+    color: #8c7b7b;
+    margin-top: 20px;
+    margin-left: 10px;
+    outline: none;
+  }
+
+  .selected-order-type {
+    width: 368px;
+    height: 60px;
+    border-radius: 32px;
+    display: flex;
+    justify-content: center;
+    background-color: #e4e4e4;
+    align-items: center;
+    gap: 22px;
+    margin-top: 18px;
+    margin-left: 7px;
+  }
+
+  .selected-order-type button {
+    width: 158px;
+    height: 42px;
+    border-radius: 23px;
+    border: none;
+    background: transparent;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+  }
+
+  .active-type {
+    background-color: #ffffff !important;
+  }
+
+  .grand-total-div {
+    width: 100vw;
+    position: relative;
+    left: calc(-50vw + 50%);
+    height: 106px;
+    background-color: #fffdef;
+    top: 20px;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .item-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .item-total-amount {
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    color: #8c7b7b;
+    margin-right: 20px;
+  }
+
+  .item-total-tag {
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    color: #817070;
+  }
+  .delivery-charge {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: -20px;
+  }
+
+  .delivery-charge-amount {
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    color: #8c7b7b;
+    margin-right: 20px;
+  }
+
+  .delivery-charge-tag {
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    color: #817070;
+  }
+  .taxes-charge {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: -20px;
+  }
+
+  .taxes-charge-amount {
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    color: #8c7b7b;
+    margin-right: 20px;
+  }
+
+  .taxes-charge-tag {
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    color: #817070;
+  }
+
+  .grand-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .grand-total-tag {
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+  }
+  .grand-total-amount {
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    margin-right: 10px;
+  }
+
+  .your-details {
+    width: 100vw;
+    position: relative;
+    left: calc(-50vw + 50%);
+    margin-top: 18px;
+    border-top: 4px solid #e5e5e5;
+    border-bottom: 4px solid #e5e5e5;
+    padding: 15px 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .your-details h2 {
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .details-input-div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .details-input-div input {
+    width: 120px;
+    border: none;
+    border-bottom: 1px solid grey;
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    outline: none;
+  }
+  .delivery-add-time-div {
+    width: 100vw;
+    position: relative;
+    left: calc(-50vw + 50%);
+    padding: 10px 20px;
+  }
+
+  .delivery-address {
+    display: flex;
+    gap: 15px;
+  }
+
+  .delivery-address img {
+    width: 10.06px;
+    height: 13px;
+  }
+
+  .delivery-address p {
+    font-family: "Inter", sans-serif;
+    font-size: 11px;
+  }
+
+  .delivery-time {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 18px;
+    border-bottom: 4px solid #e5e5e5;
+    width: 100vw;
+    position: relative;
+    left: calc(-50vw + 50%);
+    padding: 8px 20px;
+  }
+
+  .delivery-time img {
+    width: 11px;
+    height: 11px;
+    margin-top: -10px;
+  }
+
+  .delivery-time p {
+    font-family: "Inter", sans-serif;
+    font-size: 11px;
+    margin-top: -10px;
+  }
+
+  .swipe-container {
+    width: 100%;
+    width: 340px;
+    height: 75px;
+    border: 1px solid black;
+    border-radius: 190px;
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 5px;
+  }
+
+  .swipe-button {
+    width: 67px;
+    height: 72px;
+    border-radius: 230px;
+    background-color: #d9d9d9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .swipe-label {
+    color: #292d32;
+    font-size: 30px;
+    margin-top: 10px;
+  }
+
+  .swipe-complete {
+    width: 100%;
+    text-align: center;
+    color: green;
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .swipe-div {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    font-family: "Inter", sans-serif;
+    font-size: 18px;
+    color: #949494;
+  }
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(2px);
+    background-color: rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+  }
+
+  .instruction-modal-div {
+    background-color: #f0f5f3;
+    padding: 20px;
+    border-radius: 18px;
+    z-index: 1000;
+    width: 100vw;
+    height: 47vh;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25), 0 16px 40px rgba(0, 0, 0, 0.2);
+  }
+
+  .instruction-modal-div img {
+    position: absolute;
+    bottom: 590px;
+    right: 165px;
+    z-index: 1001;
+  }
+
+  .instruction-modal-div h2 {
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    text-align: left;
+  }
+
+  .instruction-modal-div textarea {
+    resize: none;
+    width: 352px;
+    height: 76px;
+    margin-top: 30px;
+    margin-left: -8px;
+    background-color: #f0f5f3;
+    border: 1px solid #c7c7c7;
+    border-radius: 5px;
+    box-shadow: 0 0 0 10px white;
+    outline: none;
+  }
+
+  .instruction-modal-div p {
+    font-family: "Inter", sans-serif;
+    font-weight: 200;
+    font-size: 12px;
+    text-align: left;
+    margin-top: 20px;
+  }
+
+  .modal-btns {
+    width: 100vw;
+    height: 80px;
+    margin-top: 90px;
+    margin-left: -20px;
+    border-radius: 21px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .modal-btns button {
+    width: 145px;
+    height: 45px;
+    border-radius: 15px;
+    border: none;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    margin-top: 5px;
+  }
+
+  .cancel-modal {
+    background-color: #f0f5f3;
+    color: #505050;
+  }
+  .next-modal {
+    background-color: #505050;
+    color: #fefefe;
+  }
 }
