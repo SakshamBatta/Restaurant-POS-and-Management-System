@@ -11,20 +11,6 @@ const itemSchema = new mongoose.Schema({
   },
 });
 
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  number: {
-    type: String,
-    required: true,
-  },
-  address: {
-    type: String,
-  },
-});
-
 const orderSchema = new mongoose.Schema({
   orderNumber: {
     type: Number,
@@ -33,7 +19,6 @@ const orderSchema = new mongoose.Schema({
   },
   tableName: {
     type: String,
-    required: true,
   },
   orderTime: {
     type: Date,
@@ -66,8 +51,8 @@ const orderSchema = new mongoose.Schema({
     required: true,
   },
   user: {
-    type: userSchema,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
   },
   deliveryTime: {
     type: String,
