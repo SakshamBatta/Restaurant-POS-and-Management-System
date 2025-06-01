@@ -62,7 +62,9 @@ export default function Status() {
           order.orderType === "Dine In"
         ) {
           axios
-            .post(`https://restaurant-pos-and-management-system.onrender.com/api/orders/update/${order._id}`)
+            .post(
+              `https://restaurant-pos-and-management-system.onrender.com/api/orders/update/${order._id}`
+            )
             .then(() => fetchOrderDetails())
             .then(() => toast.success("Order served successfully!"))
             .catch((err) =>
@@ -151,12 +153,12 @@ export default function Status() {
                         {order.orderType}
                       </div>
                       <div className="order-status-time">
-                        {order.orderType === "Dine In" ||
-                          (order.orderType === "Done" && (
-                            <div className="order-status-div-status">
-                              {order.orderStatus}
-                            </div>
-                          ))}
+                        {(order.orderType === "Dine In" ||
+                          order.orderType === "Done") && (
+                          <div className="order-status-div-status">
+                            {order.orderStatus}
+                          </div>
+                        )}
                         {order.orderStatus === "Ongoing" &&
                           order.orderType === "Dine In" && (
                             <div className="time-left-status-div">
