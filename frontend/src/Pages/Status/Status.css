@@ -123,7 +123,7 @@
 
 .order-number {
   font-family: "Inter", sans-serif;
-  font-size: 15px;
+  font-size: 12px;
   margin-left: -1px;
   width: 24px;
 }
@@ -244,4 +244,13 @@
 .done-green {
   width: 18px;
   height: 18px;
+}
+
+.takeaway-status-dropdown {
+  font-size: 10px;
+  border-radius: 5px;
+  border: none;
+  background: transparent;
+  color: black;
+  outline: none;
 }

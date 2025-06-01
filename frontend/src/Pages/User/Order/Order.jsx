@@ -44,6 +44,7 @@ import { useContext, useState } from "react";
 export default function Order() {
   const [activeMenu, setActiveMenu] = useState("Burger");
   const { selectedOrder, setSelectedOrder } = useContext(OrderContext);
+  const [searchText, setSearchText] = useState("");
 
   const menu = [
     {
@@ -99,7 +100,7 @@ export default function Order() {
       time: 15,
     },
     {
-      name: "BBQ Bacon Burger",
+      name: "BBQ Burger",
       price: 240,
       image: burger6,
       time: 15,
@@ -216,7 +217,7 @@ export default function Order() {
       time: 20,
     },
     {
-      name: "Peri Peri Fries",
+      name: "Peri Fries",
       price: 85,
       image: fries6,
       time: 20,
@@ -237,13 +238,13 @@ export default function Order() {
       time: 25,
     },
     {
-      name: "Stuffed Bell Peppers",
+      name: "Bell Peppers",
       price: 140,
       image: veggies3,
       time: 25,
     },
     {
-      name: "Mixed Veg Stir Fry",
+      name: "Mixed Fry",
       price: 130,
       image: veggies4,
       time: 25,
@@ -262,7 +263,7 @@ export default function Order() {
     },
   ];
 
-  const menuToMap =
+  const currentMenu =
     activeMenu === "Burger"
       ? burgerMenu
       : activeMenu === "Pizza"
@@ -273,11 +274,42 @@ export default function Order() {
       ? frenchFriesMenu
       : veggiesMenu;
 
+  const menuToMap = currentMenu.filter((item) =>
+    item.name.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   console.log(selectedOrder);
 
-  // const addToOrder = (item) => {
-  //   selectedOrder
-  // }
+  const addToOrder = (item) => {
+    setSelectedOrder((prevOrders) => {
+      const existingOrder = prevOrders.find(
+        (order) => order.name === item.name
+      );
+
+      if (existingOrder) {
+        return prevOrders.map((order) =>
+          order.name === item.name
+            ? { ...order, quantity: order.quantity + 1 }
+            : order
+        );
+      } else {
+        return [...prevOrders, { ...item, quantity: 1 }];
+      }
+    });
+  };
+
+  const decreaseQty = (name) => {
+    setSelectedOrder((prevOrders) => {
+      return prevOrders
+        .map((order) =>
+          order.name === name
+            ? { ...order, quantity: order.quantity - 1 }
+            : order
+        )
+        .filter((order) => order.quantity > 0);
+    });
+  };
+
   return (
     <div className="order-container">
       <div className="greet-message">
@@ -286,7 +318,12 @@ export default function Order() {
       </div>
       <div className="search-bar-div-order">
         <img src={search} alt="" />
-        <input type="text" placeholder="Search" />
+        <input
+          type="text"
+          placeholder="Search"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
       </div>
       <div className="order-menu">
         {menu.map((item, index) => (
@@ -320,15 +357,37 @@ export default function Order() {
                 <p>{item.name}</p>
                 <div className="quantity-div">
                   <h3>₹{item.price}</h3>
-                  <button className="increase-quan">
-                    <img
-                      src={addQuan}
-                      alt=""
-                      onClick={() =>
-                        setSelectedOrder((prev) => [...prev, item])
-                      }
-                    />
-                  </button>
+                  {selectedOrder.some((order) => order.name === item.name) ? (
+                    <div className="quantity">
+                      <button
+                        className="decrease-quan-btn"
+                        onClick={() => decreaseQty(item.name)}
+                      >
+                        -
+                      </button>
+                      <span>
+                        {
+                          selectedOrder.find(
+                            (order) => order.name === item.name
+                          ).quantity
+                        }
+                      </span>
+                      <button
+                        className="increase-quan-btn"
+                        onClick={() => addToOrder(item)}
+                      >
+                        +
+                      </button>
+                    </div>
+                  ) : (
+                    <button className="increase-quan">
+                      <img
+                        src={addQuan}
+                        alt=""
+                        onClick={() => addToOrder(item)}
+                      />
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

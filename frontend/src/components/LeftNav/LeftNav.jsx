@@ -13,11 +13,11 @@ export default function LeftNav() {
     {
       src: analytics,
       index: "analytics",
-      path: "/analytics",
+      path: "/",
     },
     { src: table, index: "table", path: "/tableview" },
     { src: status, index: "status", path: "/status" },
-    { src: menu, index: "menu", path: "/menu" },
+    { src: menu, index: "menu", path: "/user/order" },
   ];
 
   const currentPath = location.pathname;
@@ -29,7 +29,9 @@ export default function LeftNav() {
         {navImages.map((img) => (
           <div
             key={img.index}
-            className={`nav-img ${activeNav === img.index ? "active" : ""}`}
+            className={`nav-img ${
+              activeNav === img.index ? "active-left-nav" : ""
+            }`}
             onClick={() => {
               navigate(img.path);
             }}

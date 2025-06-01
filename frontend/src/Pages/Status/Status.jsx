@@ -4,22 +4,15 @@ import orderHeader from "../../assets/orderHeader.png";
 import time from "../../assets/time.png";
 import doneBlack from "../../assets/done-black.png";
 import doneGreen from "../../assets/done-green.png";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment-timezone";
 import { toast } from "react-toastify";
+import { OrderContext } from "../../context/OrderContext";
 
 export default function Status() {
-  const [orderStatusDetails, setOrderStatusDetails] = useState([]);
-
-  const fetchOrderDetails = async () => {
-    const response = await axios.get(`http://localhost:3000/api/orders/all`);
-    setOrderStatusDetails(response.data.orders);
-  };
-
-  useEffect(() => {
-    fetchOrderDetails();
-  }, []);
+  const { orderStatusDetails, fetchOrderDetails } = useContext(OrderContext);
+  const [dropdownStatus, setDropdownStatus] = useState("Not Picked up");
 
   const timeToIST = (time) => {
     const istTime = moment(time).tz("Asia/Kolkata").format("hh:mm A");
@@ -43,6 +36,20 @@ export default function Status() {
     return `${minutes} min`;
   };
 
+  const handleStatusChange = async (orderId, e) => {
+    const orderStatus = e.target.value;
+    setDropdownStatus(e.target.value);
+    await axios.post(
+      `http://localhost:3000/api/orders/updateTakeAway/${orderId}`,
+      {
+        orderStatus: orderStatus,
+      }
+    );
+    setDropdownStatus("Not Picked up");
+    fetchOrderDetails();
+    toast.success("Order status updated successfully!");
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       orderStatusDetails.forEach((order) => {
@@ -51,9 +58,9 @@ export default function Status() {
         if (
           parseInt(minutesLeft.split(" ")[0], 10) <= 0 &&
           order.orderType !== "Done" &&
-          order.orderStatus !== "Served"
+          order.orderStatus !== "Served" &&
+          order.orderType === "Dine In"
         ) {
-          console.log(order._id);
           axios
             .post(`http://localhost:3000/api/orders/update/${order._id}`)
             .then(() => fetchOrderDetails())
@@ -91,7 +98,8 @@ export default function Status() {
                 className="order-card"
                 style={{
                   backgroundColor: `${
-                    order.orderStatus === "Ongoing"
+                    order.orderStatus === "Ongoing" &&
+                    order.orderType === "Dine In"
                       ? "#FFE3BC"
                       : order.orderStatus === "Served"
                       ? "#B9F8C9"
@@ -143,14 +151,51 @@ export default function Status() {
                         {order.orderType}
                       </div>
                       <div className="order-status-time">
-                        <div className="order-status-div-status">
-                          {order.orderStatus}
-                        </div>
-                        {order.orderStatus === "Ongoing" && (
-                          <div className="time-left-status-div">
-                            : {getTimeLeft(order.orderTime, order.deliveryTime)}
-                          </div>
-                        )}
+                        {order.orderType === "Dine In" ||
+                          (order.orderType === "Done" && (
+                            <div className="order-status-div-status">
+                              {order.orderStatus}
+                            </div>
+                          ))}
+                        {order.orderStatus === "Ongoing" &&
+                          order.orderType === "Dine In" && (
+                            <div className="time-left-status-div">
+                              :{" "}
+                              {getTimeLeft(order.orderTime, order.deliveryTime)}
+                            </div>
+                          )}
+                        {order.orderType === "Take Away" &&
+                          (parseInt(
+                            getTimeLeft(
+                              order.orderTime,
+                              order.deliveryTime
+                            ).split(" ")[0],
+                            10
+                          ) > 0 ? (
+                            <div>
+                              <div className="order-status-div-status">
+                                {order.orderStatus}
+                              </div>{" "}
+                              <div className="time-left-status-div">
+                                :{" "}
+                                {getTimeLeft(
+                                  order.orderTime,
+                                  order.deliveryTime
+                                )}
+                              </div>
+                            </div>
+                          ) : (
+                            <select
+                              className="takeaway-status-dropdown"
+                              value={dropdownStatus}
+                              onChange={(e) => handleStatusChange(order._id, e)}
+                            >
+                              <option value="Not Picked Up">
+                                Not Picked up
+                              </option>
+                              <option value="Served">Served</option>
+                            </select>
+                          ))}
                       </div>
                     </div>
                   </div>
@@ -169,15 +214,16 @@ export default function Status() {
                   </div>
                 </div>
                 <div className="order-status-btn">
-                  {order.orderStatus === "Ongoing" && (
-                    <div
-                      className="indi-group-status"
-                      style={{ backgroundColor: "#FDC474" }}
-                    >
-                      <span style={{ color: "#D87300" }}>Processing</span>
-                      <img src={time} alt="" className="done-time" />
-                    </div>
-                  )}
+                  {order.orderStatus === "Ongoing" &&
+                    order.orderType === "Dine In" && (
+                      <div
+                        className="indi-group-status"
+                        style={{ backgroundColor: "#FDC474" }}
+                      >
+                        <span style={{ color: "#D87300" }}>Processing</span>
+                        <img src={time} alt="" className="done-time" />
+                      </div>
+                    )}
                   {order.orderStatus === "Served" && (
                     <div
                       className="indi-group-status"
@@ -187,7 +233,7 @@ export default function Status() {
                       <img src={doneGreen} alt="" className="done-green" />
                     </div>
                   )}
-                  {order.orderStatus === "Not Picked up" && (
+                  {order.orderType === "Take Away" && (
                     <div
                       className="indi-group-status"
                       style={{ backgroundColor: "#9BAEB3" }}

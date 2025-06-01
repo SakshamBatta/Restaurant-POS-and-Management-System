@@ -184,3 +184,26 @@
   text-decoration: none;
   padding-top: 10px;
 }
+
+.quantity {
+  display: flex;
+  width: 88px;
+  height: 24px;
+  gap: 16px;
+  align-items: center;
+}
+
+.decrease-quan-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  border: 1px solid grey;
+  font-size: 17px;
+}
+.increase-quan-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  border: 1px solid grey;
+  font-size: 17px;
+}

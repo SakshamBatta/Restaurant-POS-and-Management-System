@@ -3,32 +3,23 @@ import "./TableView.css";
 import deleteTable from "../../assets/deleteTable.png";
 import chair from "../../assets/chair.png";
 import add from "../../assets/add.png";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { TableContext } from "../../context/TableContext";
 
 export default function TableView() {
   const [addTableModal, setAddTableModal] = useState(false);
-  const [tables, setTables] = useState([]);
-  const [tableToDelete, setTableToDelete] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const fetchTables = async () => {
-    try {
-      const response = await axios.get(`http://localhost:3000/api/tables/all`);
-      setTables(response.data.tables);
-    } catch (error) {
-      console.error("Error fetching tables:", error);
-    }
-  };
+  const { tables, fetchTables } = useContext(TableContext);
 
-  const handleTableDelete = async () => {
-    if (tableToDelete) {
+  const handleTableDelete = async (id) => {
+    if (id) {
       try {
-        const id = tableToDelete;
         console.log(id);
         await axios.delete(`http://localhost:3000/api/tables/delete/${id}`);
         toast.success("Table deleted successfully");
-        setTableToDelete(null);
         fetchTables();
       } catch (error) {
         console.error("Error deleting table:", error);
@@ -37,9 +28,6 @@ export default function TableView() {
     }
   };
 
-  useEffect(() => {
-    fetchTables();
-  }, []);
   const modalRef = useRef(null);
   const [newTable, setNewTable] = useState({ name: "", number: 0, chairs: 1 });
 
@@ -107,8 +95,10 @@ export default function TableView() {
           <div className="search-dot-tableview"></div>
           <input
             type="text"
-            placeholder="Search"
+            placeholder="Search by table name"
             className="search-area-table-tableview"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
       </div>
@@ -117,27 +107,30 @@ export default function TableView() {
         <div className="right-area-main-content-table-tableview">
           <h2>Tables</h2>
           <div className="tables-view">
-            {tables?.map((table) => (
-              <div className="indi-table" key={table.number}>
-                <img
-                  src={deleteTable}
-                  alt=""
-                  className="delete-img"
-                  onClick={() => {
-                    setTableToDelete(table._id);
-                    handleTableDelete();
-                  }}
-                />
-                <div className="table-name">
-                  <h3>Table</h3>
-                  <h4>{table.name}</h4>
+            {tables
+              ?.filter((table) =>
+                table.name.toLowerCase().includes(searchTerm.toLowerCase())
+              )
+              .map((table) => (
+                <div className="indi-table" key={table.number}>
+                  <img
+                    src={deleteTable}
+                    alt=""
+                    className="delete-img"
+                    onClick={() => handleTableDelete(table._id)}
+                  />
+                  <div className="table-name">
+                    <h3>Table</h3>
+                    <h4>{table.name}</h4>
+                  </div>
+                  <div className="chair-info">
+                    <img src={chair} alt="" className="chair-img" />
+                    <p>
+                      {table.chairs < 10 ? `0${table.chairs}` : table.chairs}
+                    </p>
+                  </div>
                 </div>
-                <div className="chair-info">
-                  <img src={chair} alt="" className="chair-img" />
-                  <p>{table.chairs < 10 ? `0${table.chairs}` : table.chairs}</p>
-                </div>
-              </div>
-            ))}
+              ))}
 
             <button
               className="add-table-btn"
@@ -167,12 +160,12 @@ export default function TableView() {
                   }))
                 }
               >
-                <option value="01">01</option>
-                <option value="02">02</option>
-                <option value="03">03</option>
-                <option value="04">04</option>
-                <option value="05">05</option>
-                <option value="06">06</option>
+                <option value="1">01</option>
+                <option value="2">02</option>
+                <option value="3">03</option>
+                <option value="4">04</option>
+                <option value="5">05</option>
+                <option value="6">06</option>
               </select>
               <button className="create-table-btn" onClick={handleCreateTable}>
                 Create

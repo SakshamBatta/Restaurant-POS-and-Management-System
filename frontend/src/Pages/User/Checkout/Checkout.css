@@ -89,6 +89,7 @@
   color: #8c7b7b;
   margin-top: 22px;
   margin-left: 10px;
+  outline: none;
 }
 
 .selected-order-type {
@@ -332,4 +333,95 @@
   font-family: "Inter", sans-serif;
   font-size: 18px;
   color: #949494;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(2px);
+  background-color: rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.instruction-modal-div {
+  background-color: #f0f5f3;
+  padding: 20px;
+  border-radius: 18px;
+  z-index: 1000;
+  width: 100vw;
+  height: 40vh;
+  text-align: center;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25), 0 16px 40px rgba(0, 0, 0, 0.2);
+}
+
+.instruction-modal-div img {
+  position: absolute;
+  bottom: 670px;
+  right: 185px;
+  z-index: 1001;
+}
+
+.instruction-modal-div h2 {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  text-align: left;
+}
+
+.instruction-modal-div textarea {
+  resize: none;
+  width: 352px;
+  height: 76px;
+  margin-top: 30px;
+  margin-left: -8px;
+  background-color: #f0f5f3;
+  border: 1px solid #c7c7c7;
+  border-radius: 5px;
+  box-shadow: 0 0 0 10px white;
+  outline: none;
+}
+
+.instruction-modal-div p {
+  font-family: "Inter", sans-serif;
+  font-weight: 200;
+  font-size: 12px;
+  text-align: left;
+  margin-top: 20px;
+}
+
+.modal-btns {
+  width: 100vw;
+  height: 80px;
+  margin-top: 80px;
+  margin-left: -20px;
+  border-radius: 21px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.modal-btns button {
+  width: 185px;
+  height: 55px;
+  border-radius: 15px;
+  border: none;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 22px;
+}
+
+.cancel-modal {
+  background-color: #f0f5f3;
+  color: #505050;
+}
+.next-modal {
+  background-color: #505050;
+  color: #fefefe;
 }
