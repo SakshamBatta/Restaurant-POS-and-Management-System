@@ -352,7 +352,7 @@ export default function Order() {
         <div className="all-items">
           {menuToMap.map((item, index) => (
             <div className="indi-item-div" key={index}>
-              <img src={item.image} alt="" />
+              <img src={item.image} alt="" className="item-image" />
               <div className="name-price">
                 <p>{item.name}</p>
                 <div className="quantity-div">
@@ -385,6 +385,7 @@ export default function Order() {
                         src={addQuan}
                         alt=""
                         onClick={() => addToOrder(item)}
+                        className="add-quan-plus"
                       />
                     </button>
                   )}
